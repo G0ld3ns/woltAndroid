@@ -136,5 +136,16 @@ public class WoltMain extends AppCompatActivity {
     }
 
     public void viewMyAccount(View view) {
+        if (!(currentUser instanceof BasicUser)) {
+            Toast.makeText(this, "Only clients can update account here.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Gson gson = new Gson();
+        String userJson = gson.toJson(currentUser, BasicUser.class);
+
+        Intent intent = new Intent(WoltMain.this, AccountUpdate.class);
+        intent.putExtra("userJsonObject", userJson);
+        startActivity(intent);
     }
 }

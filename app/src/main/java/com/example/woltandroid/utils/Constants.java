@@ -13,6 +13,8 @@ public class Constants {
     public static final String GET_PREPARING_ORDERS = HOME_URL + "driver/orders/preparing";
     public static final String UPDATE_ORDER_STATUS = HOME_URL + "driver/orders/";
     public static final String CREATE_DRIVER_URL = HOME_URL + "insertDriver";
+    public static final String UPDATE_BASIC_USER_URL = HOME_URL + "updateBasicUserById/";
+
 
 
 

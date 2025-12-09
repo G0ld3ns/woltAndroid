@@ -11,5 +11,6 @@
     <string name="go_back_en">Go back</string>
     <string name="plus">+</string>
     <string name="minus">-</string>
+    <string name="save_changes_en">Save changes</string>
 
 </resources>
