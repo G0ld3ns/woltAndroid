@@ -9,6 +9,7 @@ import android.os.Looper;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -62,7 +63,14 @@ public class WoltMain extends AppCompatActivity {
         if (json.has("vehicleType")) {
             currentUser = gson.fromJson(userInfo, Driver.class);
         } else if (json.has("restaurantName")) {
-            currentUser = gson.fromJson(userInfo, Restaurant.class);
+            Toast.makeText(this,
+                    "Restaurant accounts cannot use the mobile app.",
+                    Toast.LENGTH_LONG).show();
+
+            Intent back = new Intent(WoltMain.this, MainActivity.class);
+            startActivity(back);
+            finish();
+            return;
         } else {
             currentUser = gson.fromJson(userInfo, BasicUser.class);
         }
