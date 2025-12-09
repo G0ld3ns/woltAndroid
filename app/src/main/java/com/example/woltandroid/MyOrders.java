@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.View;
 import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
@@ -80,5 +81,9 @@ public class MyOrders extends AppCompatActivity {
                 throw new RuntimeException(e);
             }
         });
+    }
+
+    public void sendBack(View view) {
+        finish();
     }
 }

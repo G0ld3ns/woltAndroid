@@ -87,4 +87,9 @@ public class Restaurant extends User {
     public void setClosingTime(LocalTime closingTime) {
         this.closingTime = closingTime;
     }
+
+    @Override
+    public String toString() {
+        return "Name: " + name + "\nHours: " + openingTime + " - " + closingTime + "\nType: " + cuisineType;
+    }
 }

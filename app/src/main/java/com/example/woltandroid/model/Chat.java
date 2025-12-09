@@ -56,4 +56,9 @@ public class Chat {
     public void setDateCreated(LocalDate dateCreated) {
         this.dateCreated = dateCreated;
     }
+
+    @Override
+    public String toString() {
+        return name + ": " + chatText;
+    }
 }

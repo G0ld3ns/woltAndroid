@@ -130,6 +130,9 @@ public class WoltMain extends AppCompatActivity {
     }
 
     public void viewPurchaseHistory(View view) {
+        Intent intent = new Intent(WoltMain.this, MyOrders.class);
+        intent.putExtra("id", currentUser.getId());
+        startActivity(intent);
     }
 
     public void viewMyAccount(View view) {

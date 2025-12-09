@@ -210,4 +210,8 @@ public class MenuActivity extends AppCompatActivity implements MenuAdapter.OnQua
     public void onQuantityChanged() {
         updateOrderSummary();
     }
+
+    public void sendBack(View view) {
+        finish();
+    }
 }

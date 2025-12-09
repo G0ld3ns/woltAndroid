@@ -15,6 +15,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.woltandroid.utils.LocalDateSerializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -99,7 +100,7 @@ public class ChatSystem extends AppCompatActivity {
                     try {
                         if (!response.equals("Error")) {
                             GsonBuilder gsonBuilder = new GsonBuilder();
-                            gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalTimeSerializer());
+                            gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
                             Gson gsonMessages = gsonBuilder.setPrettyPrinting().create();
                             Type messagesListType = new TypeToken<List<Review>>() {
                             }.getType();
@@ -151,6 +152,11 @@ public class ChatSystem extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    public void sendBack(View view) {
+        finish();
 
     }
 }

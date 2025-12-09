@@ -87,4 +87,9 @@ public class Review {
     public void setChat(Chat chat) {
         this.chat = chat;
     }
+
+    @Override
+    public String toString() {
+        return commentOwner.getLogin() + ": " + reviewText;
+    }
 }
