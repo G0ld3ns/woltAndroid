@@ -12,5 +12,5 @@
     <string name="plus">+</string>
     <string name="minus">-</string>
     <string name="save_changes_en">Save changes</string>
-
+    <string name="delete_account_en">Delete account</string>
 </resources>

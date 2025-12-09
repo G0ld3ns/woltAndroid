@@ -1,6 +1,7 @@
 package com.example.woltandroid;
 import static com.example.woltandroid.utils.Constants.UPDATE_BASIC_USER_URL;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -15,6 +16,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.woltandroid.model.BasicUser;
+import com.example.woltandroid.utils.Constants;
 import com.example.woltandroid.utils.RestOperations;
 import com.google.gson.Gson;
 
@@ -24,6 +26,7 @@ import java.util.concurrent.Executors;
 
 public class AccountUpdate extends AppCompatActivity {
 
+    private BasicUser currentUser;
     private BasicUser basicUser;
     private EditText editLogin;
     private EditText editPassword;
@@ -46,6 +49,14 @@ public class AccountUpdate extends AppCompatActivity {
             );
             return insets;
         });
+
+        Intent intent = getIntent();
+        String userInfo = intent.getStringExtra("userJsonObject");
+        if (userInfo != null) {
+            Gson gson = new Gson();
+            currentUser = gson.fromJson(userInfo, BasicUser.class);
+        }
+
         editLogin    = findViewById(R.id.changeLogin);
         editPassword = findViewById(R.id.changePass);
         editName     = findViewById(R.id.changeName);
@@ -127,4 +138,57 @@ public class AccountUpdate extends AppCompatActivity {
     public void sendBack(View view) {
         finish();
     }
+
+    public void deleteAcccount(View view) {
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Delete Account")
+                .setMessage("Are you sure you want to permanently delete your account?")
+                .setPositiveButton("Yes", (dialog, which) -> performDelete())
+                .setNegativeButton("Cancel", null)
+                .show();
+
+    }
+
+    private void performDelete() {
+        Executor executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        executor.execute(() -> {
+            try {
+                if (currentUser == null) {
+                    handler.post(() ->
+                            Toast.makeText(AccountUpdate.this,
+                                    "User data missing", Toast.LENGTH_SHORT).show());
+                    return;
+                }
+
+                String url = Constants.DELETE_BASIC_USER_URL + currentUser.getId();
+                String response = RestOperations.sendDelete(url);
+
+                handler.post(() -> {
+                    if (response.contains("Successfully")) {
+                        Toast.makeText(this,
+                                "Account deleted", Toast.LENGTH_LONG).show();
+
+                        Intent intent = new Intent(AccountUpdate.this,
+                                MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(this,
+                                "Failed to delete account", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                handler.post(() ->
+                        Toast.makeText(AccountUpdate.this,
+                                "Network error", Toast.LENGTH_LONG).show());
+            }
+        });
+    }
+
+
 }
